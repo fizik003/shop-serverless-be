@@ -18,4 +18,7 @@ export class HttpResponse {
 
   static serverError = (message: string = 'Something Went Wrong') =>
     this.createResponse(StatusCode.ServerError, { message })
+
+  static bedRequest = (message: string = 'Bad Request') =>
+    this.createResponse(StatusCode.BadRequest, { message })
 }
