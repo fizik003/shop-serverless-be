@@ -1,3 +1,3 @@
-import { productsMock } from "./products";
+import { productsMock } from './products'
 
-export const getProductsMock = Promise.resolve(productsMock);
+export const getProductsMock = () => Promise.resolve(productsMock)

@@ -1,1 +1,2 @@
-export { StatusCode } from "./statusCode";
+export { StatusCode } from './statusCode'
+export { defaultHeaders } from './headers'
