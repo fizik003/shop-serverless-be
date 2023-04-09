@@ -1,8 +1,13 @@
+import 'reflect-metadata'
+
 import { HttpResponse } from '@utils'
-import { getProductsMock } from '@mocks'
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway'
 import schema from './schema'
 import { middyfy } from '@libs/lambda'
+import { productsContainer } from '@containers'
+import { ProductsService } from '@services'
+
+const productsService = productsContainer.resolve(ProductsService)
 
 const getProductById: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   console.log('Lambda invocation with event: ', JSON.stringify(event))
@@ -11,8 +16,7 @@ const getProductById: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async 
 
     if (!productId) return HttpResponse.bedRequest()
 
-    const products = await getProductsMock()
-    const product = products.find(({ id }) => id === productId)
+    const product = await productsService.getById(productId)
 
     console.log('Product:', product)
 

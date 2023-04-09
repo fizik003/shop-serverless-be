@@ -9,7 +9,8 @@
       "@types":["src/types/"],
       "@utils":["src/utils/"],
       "@repositories":["src/repositories/"],
-      "@services":["src/services/"]
+      "@services":["src/services/"],
+      "@containers":["src/containers"]
     }
   }
 }

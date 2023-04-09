@@ -1,7 +1,9 @@
+import { injectable } from 'inversify'
 import { Product } from '@types'
-import { ProductsRepositoryAbstract } from './'
+import { ProductsRepository } from './'
 import { getProductsMock } from '@mocks'
 
+@injectable()
 export class ProductsMockRepository implements ProductsRepository {
   getAll(): Promise<Product[]> {
     return getProductsMock()

@@ -13,7 +13,9 @@
   },
   "dependencies": {
     "@middy/core": "^3.4.0",
-    "@middy/http-json-body-parser": "^3.4.0"
+    "@middy/http-json-body-parser": "^3.4.0",
+    "inversify": "^6.0.1",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",

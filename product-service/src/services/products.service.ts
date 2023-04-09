@@ -1,10 +1,10 @@
+import { injectable, inject } from 'inversify'
 import { Product } from '@types'
 import { ProductsRepository } from '@repositories'
 
+@injectable()
 export class ProductsService {
-  constructor(private productsRepository: ProductsRepository) {
-    this.productsRepository = productsRepository
-  }
+  constructor(@inject(ProductsRepository) private productsRepository: ProductsRepository) {}
 
   async getAll(): Promise<Product[]> {
     return this.productsRepository.getAll()
