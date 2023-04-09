@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@functions": ["src/functions/"],
+      "@functions": ["src/handlers/"],
       "@libs/*": ["src/libs/*"],
       "@consts":["src/consts/"],
       "@mocks":["src/mocks/"],

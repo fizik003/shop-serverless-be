@@ -1,11 +1,11 @@
 import type { AWS } from '@serverless/typescript'
 
-import { getProductsList, getProductById } from '@functions'
+import { getProductsList, getProductById } from 'src/handlers'
 
 const serverlessConfiguration: AWS = {
   service: 'product-service',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild'],
+  plugins: ['serverless-esbuild', 'serverless-offline'],
   provider: {
     name: 'aws',
     region: 'us-east-1',
