@@ -2,6 +2,10 @@ import { getProductsMock } from '@mocks'
 import { HttpResponse } from '@utils'
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway'
 import { middyfy } from '@libs/lambda'
+import { ProductsService } from '@services'
+import { ProductsMockRepository } from '@repositories'
+
+const productsService = new ProductsService(new ProductsMockRepository())
 
 import schema from './schema'
 
@@ -9,7 +13,7 @@ const getProductsList: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async
   console.log('Lambda invocation with event: ', JSON.stringify(event))
 
   try {
-    const products = await getProductsMock()
+    const products = await productsService.getAll()
 
     console.log('Products received: ', JSON.stringify(products))
 
