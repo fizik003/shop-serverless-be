@@ -7,7 +7,7 @@ import { middyfy } from '@libs/lambda'
 const getProductById: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   console.log('Lambda invocation with event: ', JSON.stringify(event))
   try {
-    const productId = event.pathParameters.id
+    const productId = event.pathParameters?.id
 
     if (!productId) return HttpResponse.bedRequest()
 
