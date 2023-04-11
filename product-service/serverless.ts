@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript'
 
-import { getProductsList, getProductById } from 'src/handlers'
+import { getProductsList, getProductById, createProduct } from 'src/handlers'
 
 const serverlessConfiguration: AWS = {
   service: 'product-service',
@@ -16,13 +16,27 @@ const serverlessConfiguration: AWS = {
       minimumCompressionSize: 1024,
       shouldStartNameWithService: true,
     },
+    iamRoleStatements: [
+      {
+        Effect: 'Allow',
+        Action: ['dynamodb:Query', 'dynamodb:Scan', 'dynamodb:GetItem', 'dynamodb:PutItem'],
+        Resource: [
+          'arn:aws:dynamodb:us-east-1:690275943084:table/stock',
+          'arn:aws:dynamodb:us-east-1:690275943084:table/products',
+        ],
+      },
+    ],
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
+      PRODUCTS_TABLE_NAME: '${self:custom.productsTableName}',
+      REGION: '${self:provider.region}',
+      PRODUCTS_TABLE: '${self:custom.productsTableName}',
+      STOCK_TABLE: '${self:custom.stockTableName}',
     },
   },
   // import the function via paths
-  functions: { getProductsList, getProductById },
+  functions: { getProductsList, getProductById, createProduct },
   package: { individually: true },
   custom: {
     esbuild: {
@@ -35,7 +49,35 @@ const serverlessConfiguration: AWS = {
       platform: 'node',
       concurrency: 10,
     },
+    productsTableName: 'products',
+    stockTableName: 'stock',
   },
+  // resources: {
+  //   Resources: {
+  //     productsTable: {
+  //       Type: 'AWS::DynamoDB::Table',
+  //       Properties: {
+  //         TableName: '${self:custom.productsTableName}',
+  //         AttributeDefinitions: [
+  //           {
+  //             AttributeName: 'id',
+  //             AttributeType: 'S',
+  //           },
+  //         ],
+  //         KeySchema: [
+  //           {
+  //             AttributeName: 'id',
+  //             KeyType: 'HASH',
+  //           },
+  //         ],
+  //         ProvisionedThroughput: {
+  //           ReadCapacityUnits: 1,
+  //           WriteCapacityUnits: 1,
+  //         },
+  //       },
+  //     },
+  //   },
+  // },
 }
 
 module.exports = serverlessConfiguration
