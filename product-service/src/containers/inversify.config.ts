@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import { Container, interfaces } from 'inversify'
 import { ProductsRepository, DynamoProductsRepository } from '@repositories'
-import { ProductsService } from '@services'
+import { ProductsService, ValidateService } from '@services'
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
 
@@ -38,3 +38,5 @@ productsContainer
 productsContainer
   .bind<DynamoProductsRepository>(DynamoProductsRepository)
   .to(DynamoProductsRepository)
+
+productsContainer.bind<ValidateService>(ValidateService).to(ValidateService)

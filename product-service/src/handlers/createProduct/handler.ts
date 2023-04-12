@@ -1,5 +1,6 @@
 import 'reflect-metadata'
-import { ProductsService } from '@services'
+import { createProductValidateSchema } from '@utils'
+import { ProductsService, ValidateService } from '@services'
 import { productsContainer } from '@containers'
 import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway'
 import schema from './schema'
@@ -8,13 +9,18 @@ import { ProductCreateData } from '@types'
 import { HttpResponse } from '@utils'
 
 const productService = productsContainer.get(ProductsService)
+const validateService = productsContainer.get(ValidateService)
 
 const createProduct: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   console.log('Lambda invocation with event: ', JSON.stringify(event))
 
   try {
     const { body: productData } = event
-    if (!isDataValid(productData)) return HttpResponse.bedRequest('Data is incorrect')
+    try {
+      await validateService.validate(createProductValidateSchema, productData)
+    } catch (error) {
+      return HttpResponse.bedRequest('Data is incorrect')
+    }
 
     const newProductCard = await productService.create(productData as ProductCreateData)
     console.log('Product created success', newProductCard)
