@@ -3,7 +3,7 @@ import type { AWS } from '@serverless/typescript'
 import { importProductsFile } from 'src/handlers'
 
 const serverlessConfiguration: AWS = {
-  service: 'product-service',
+  service: 'import-service',
   frameworkVersion: '3',
   plugins: ['serverless-esbuild', 'serverless-offline'],
   provider: {
@@ -19,10 +19,10 @@ const serverlessConfiguration: AWS = {
     iamRoleStatements: [
       {
         Effect: 'Allow',
-        Action: ['dynamodb:Query', 'dynamodb:Scan', 'dynamodb:GetItem', 'dynamodb:PutItem'],
+        Action: 's3:*',
         Resource: [
-          'arn:aws:dynamodb:us-east-1:690275943084:table/stock',
-          'arn:aws:dynamodb:us-east-1:690275943084:table/products',
+          'arn:aws:s3:::${self:custom.uploadBucket}',
+          'arn:aws:s3:::${self:custom.uploadBucket}/*',
         ],
       },
     ],
@@ -30,8 +30,9 @@ const serverlessConfiguration: AWS = {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
       NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
       REGION: '${self:provider.region}',
-      UPLOAD_FOLDER: 'uploaded',
-      UPLOAD_BUCKET: 'import-service003',
+      UPLOAD_FOLDER: '${self:custom.uploadFolder}',
+      UPLOAD_BUCKET: '${self:custom.uploadBucket}',
+      PARSED_FOLDER: '${self:custom.parsedFolder}',
     },
   },
   // import the function via paths
@@ -48,8 +49,9 @@ const serverlessConfiguration: AWS = {
       platform: 'node',
       concurrency: 10,
     },
-    productsTableName: 'products',
-    stockTableName: 'stock',
+    uploadFolder: 'uploaded',
+    uploadBucket: 'import-service003',
+    parsedFolder: 'parsed',
   },
   // resources: {
   //   Resources: {
