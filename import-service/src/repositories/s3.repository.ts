@@ -46,11 +46,11 @@ export class S3Repository implements Repository {
     return data.Body as Readable | undefined
   }
 
-  async copyFile(source: string, fileName: string): Promise<void> {
+  async copyFile(sourceFileName: string, newPathFileName: string): Promise<void> {
     const params = {
       Bucket: this.BUCKET_NAME,
-      CopySource: `${this.BUCKET_NAME}/${source}`,
-      Key: `${this.PARSED_FOLDER}/${fileName}`,
+      CopySource: `${this.BUCKET_NAME}/${sourceFileName}`,
+      Key: `${this.PARSED_FOLDER}/${newPathFileName}`,
     } as CopyObjectCommandInput
     const command = new CopyObjectCommand(params)
     await this.s3Client.send(command)
