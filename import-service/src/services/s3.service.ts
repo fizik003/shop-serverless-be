@@ -3,7 +3,7 @@ import { injectable, inject } from 'inversify'
 import { Repository, S3Repository } from '@repositories'
 
 @injectable()
-export class s3Service {
+export class S3Service {
   private s3Repository: Repository
 
   constructor(@inject(S3Repository) s3Repository) {

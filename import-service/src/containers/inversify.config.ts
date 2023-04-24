@@ -3,7 +3,7 @@ import { Container, interfaces } from 'inversify'
 import { S3Client } from '@aws-sdk/client-s3'
 
 import { Repository, S3Repository } from '@repositories'
-import { s3Service } from '@services'
+import { S3Service } from '@services'
 
 export const importServiceContainer = new Container()
 
@@ -15,4 +15,4 @@ importServiceContainer.bind<interfaces.Factory<S3Client>>('S3_CLIENT').toFactory
 })
 
 importServiceContainer.bind<Repository>(S3Repository).to(S3Repository)
-importServiceContainer.bind<S3Repository>(S3Repository).to(S3Repository)
+importServiceContainer.bind<S3Service>(S3Service).to(S3Service)
