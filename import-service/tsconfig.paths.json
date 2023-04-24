@@ -2,8 +2,15 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@functions/*": ["src/functions/*"],
-      "@libs/*": ["src/libs/*"]
+      "@functions": ["src/handlers/"],
+      "@libs/*": ["src/libs/*"],
+      "@consts":["src/consts/"],
+      "@mocks":["src/mocks/"],
+      "@types":["src/types/"],
+      "@utils":["src/utils/"],
+      "@repositories":["src/repositories/"],
+      "@services":["src/services/"],
+      "@containers":["src/containers"]
     }
   }
 }
