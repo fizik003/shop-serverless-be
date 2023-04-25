@@ -14,6 +14,6 @@ importServiceContainer.bind<interfaces.Factory<S3Client>>('S3_CLIENT').toFactory
   }
 })
 
-importServiceContainer.bind<Repository>(S3Repository).to(S3Repository)
+importServiceContainer.bind<Repository>(Repository).to(S3Repository)
 importServiceContainer.bind<S3Service>(S3Service).to(S3Service)
 importServiceContainer.bind<CsvParseService>(CsvParseService).to(CsvParseService)

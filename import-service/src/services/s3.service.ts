@@ -1,7 +1,7 @@
 import { injectable, inject } from 'inversify'
 import { Readable } from 'stream'
 
-import { Repository, S3Repository } from '@repositories'
+import { Repository } from '@repositories'
 
 const PARSED_FOLDER = process.env.PARSED_FOLDER
 
@@ -9,7 +9,7 @@ const PARSED_FOLDER = process.env.PARSED_FOLDER
 export class S3Service {
   private s3Repository: Repository
 
-  constructor(@inject(S3Repository) s3Repository) {
+  constructor(@inject(Repository) s3Repository) {
     this.s3Repository = s3Repository
   }
 

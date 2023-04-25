@@ -5,12 +5,11 @@ import { fileNameQuerySchema, HttpResponse } from '@utils'
 import { importServiceContainer } from '@containers'
 import { S3Service } from '@services'
 
-const s3Service = importServiceContainer.get(S3Service)
-
 const importProductsFile: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event) => {
   console.log('Lambda invocation with event: ', JSON.stringify(event))
 
   try {
+    const s3Service = importServiceContainer.resolve(S3Service)
     const { queryStringParameters } = event
 
     try {
@@ -24,7 +23,7 @@ const importProductsFile: ValidatedEventAPIGatewayProxyEvent<typeof schema> = as
     const url = await s3Service.getSignedUrl(fileName)
     return HttpResponse.success(url)
   } catch (error) {
-    console.log('An error occurred while import products file', error)
+    console.log('An error occurred while create signed url', error)
 
     return HttpResponse.serverError(error)
   }

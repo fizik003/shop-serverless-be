@@ -20,16 +20,16 @@ export class S3Repository implements Repository {
   private s3Client: S3Client
   private BUCKET_NAME: string
   private UPLOAD_FOLDER: string
-  private PARSED_FOLDER: string
 
   constructor(@inject('S3_CLIENT') s3ClientFactory) {
     this.s3Client = s3ClientFactory()
     this.BUCKET_NAME = process.env.UPLOAD_BUCKET
     this.UPLOAD_FOLDER = process.env.UPLOAD_FOLDER
-    this.PARSED_FOLDER = process.env.PARSED_FOLDER
   }
 
   async getSignedUrl(fileName: string): Promise<string> {
+    console.log(111111111)
+
     const params = {
       Bucket: this.BUCKET_NAME,
       Key: `${this.UPLOAD_FOLDER}/${fileName}`,
