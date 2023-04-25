@@ -33,6 +33,7 @@ const serverlessConfiguration: AWS = {
       REGION: '${self:provider.region}',
       PRODUCTS_TABLE: '${self:custom.productsTableName}',
       STOCK_TABLE: '${self:custom.stockTableName}',
+      MOCK: `${process.env.MOCK ? true : false}`,
     },
   },
   // import the function via paths

@@ -1,14 +1,17 @@
 import 'reflect-metadata'
 import { Container, interfaces } from 'inversify'
-import { ProductsRepository, DynamoProductsRepository } from '@repositories'
+import { ProductsRepository, DynamoProductsRepository, ProductsMockRepository } from '@repositories'
 import { ProductsService, ValidateService } from '@services'
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
 
 // import { fromIni } from '@aws-sdk/credential-providers'
 
+const defaultProductRepository =
+  process.env.MOCK === 'true' ? ProductsMockRepository : DynamoProductsRepository
+
 export const productsContainer = new Container()
-productsContainer.bind<ProductsRepository>(ProductsRepository).to(DynamoProductsRepository)
+productsContainer.bind<ProductsRepository>(ProductsRepository).to(defaultProductRepository)
 productsContainer.bind<ProductsService>(ProductsService).to(ProductsService)
 
 productsContainer
