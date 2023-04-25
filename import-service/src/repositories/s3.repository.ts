@@ -50,7 +50,7 @@ export class S3Repository implements Repository {
     const params = {
       Bucket: this.BUCKET_NAME,
       CopySource: `${this.BUCKET_NAME}/${sourceFileName}`,
-      Key: `${this.PARSED_FOLDER}/${newPathFileName}`,
+      Key: `${newPathFileName}`,
     } as CopyObjectCommandInput
     const command = new CopyObjectCommand(params)
     await this.s3Client.send(command)

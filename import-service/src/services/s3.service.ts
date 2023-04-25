@@ -3,6 +3,8 @@ import { Readable } from 'stream'
 
 import { Repository, S3Repository } from '@repositories'
 
+const PARSED_FOLDER = process.env.PARSED_FOLDER
+
 @injectable()
 export class S3Service {
   private s3Repository: Repository
@@ -19,7 +21,8 @@ export class S3Service {
     return this.s3Repository.readFile(fileName)
   }
 
-  async moveFile(sourceFileName: string, newPathFileName: string): Promise<void> {
+  async moveFile(sourceFileName: string, fileName: string, path = PARSED_FOLDER): Promise<void> {
+    const newPathFileName = `${path}/${fileName}`
     await this.s3Repository.copyFile(sourceFileName, newPathFileName)
     await this.s3Repository.deleteFile(sourceFileName)
   }
