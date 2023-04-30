@@ -1,10 +1,10 @@
 import { injectable, inject } from 'inversify'
 import { ProductCard, ProductCreateData } from '@types'
-import { ProductsRepository, DynamoProductsRepository } from '@repositories'
+import { ProductsRepository } from '@repositories'
 
 @injectable()
 export class ProductsService {
-  constructor(@inject(ProductsRepository) private productsRepository: DynamoProductsRepository) {}
+  constructor(@inject(ProductsRepository) private productsRepository: ProductsRepository) {}
 
   async getAll(): Promise<ProductCard[]> {
     return this.productsRepository.getAll()
