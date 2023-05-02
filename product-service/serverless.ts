@@ -121,6 +121,24 @@ const serverlessConfiguration: AWS = {
       //   },
       // },
     },
+    Outputs: {
+      productsSQSQueueUrl: {
+        Value: {
+          Ref: 'ProductsSQSQueue',
+        },
+        Export: {
+          Name: { 'Fn::Sub': '${AWS::StackName}-productsSQSUrl' },
+        },
+      },
+      productsSQSQueueArn: {
+        Value: {
+          'Fn::GetAtt': ['ProductsSQSQueue', 'Arn'],
+        },
+        Export: {
+          Name: { 'Fn::Sub': '${AWS::StackName}-productsSQSArn' },
+        },
+      },
+    },
   },
 }
 

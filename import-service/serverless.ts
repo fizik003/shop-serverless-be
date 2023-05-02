@@ -25,6 +25,13 @@ const serverlessConfiguration: AWS = {
           'arn:aws:s3:::${self:custom.uploadBucket}/*',
         ],
       },
+      {
+        Effect: 'Allow',
+        Action: 'sqs:*',
+        Resource: {
+          'Fn::ImportValue': 'product-service-dev-productsSQSArn',
+        },
+      },
     ],
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
@@ -33,6 +40,9 @@ const serverlessConfiguration: AWS = {
       UPLOAD_FOLDER: '${self:custom.uploadFolder}',
       UPLOAD_BUCKET: '${self:custom.uploadBucket}',
       PARSED_FOLDER: '${self:custom.parsedFolder}',
+      SQS_URL: {
+        'Fn::ImportValue': 'product-service-dev-productsSQSUrl',
+      },
     },
   },
   // import the function via paths
