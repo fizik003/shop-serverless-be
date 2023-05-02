@@ -98,6 +98,18 @@ const serverlessConfiguration: AWS = {
           Endpoint: 'kassik0boks@gmail.com',
         },
       },
+      CreateProductItemSubscription2: {
+        Type: 'AWS::SNS::Subscription',
+        Properties: {
+          TopicArn: { Ref: 'CreateProductItemTopic' },
+          Protocol: 'email',
+          Endpoint: 'kassik0boks@yandex.ru',
+          FilterPolicy: {
+            count: [{ numeric: ['>', 30] }],
+          },
+        },
+      },
+
       // productsTable: {
       //   Type: 'AWS::DynamoDB::Table',
       //   Properties: {

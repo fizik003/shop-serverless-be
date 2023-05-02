@@ -12,9 +12,19 @@ export class SnsService {
 
   async sendNotificationProductsCreated(products: ProductCard[]): Promise<void> {
     const message = `Products have just created: ${products.map(({ title }) => title).join(', ')}`
-    await this.snsRepository.sendNotification({
-      Message: message,
-      Subject: 'Products have updated',
-    })
+    await Promise.all(
+      products.map(async (product) => {
+        return await this.snsRepository.sendNotification({
+          Message: `Product ${product.title} was created`,
+          Subject: 'Products have updated',
+          MessageAttributes: {
+            count: {
+              DataType: 'Number',
+              StringValue: `${product.count}`,
+            },
+          },
+        })
+      })
+    )
   }
 }
