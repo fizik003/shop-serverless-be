@@ -6,6 +6,7 @@ import { createProductValidateSchema } from '@utils'
 import { ProductCreateData, ProductCard } from '@types'
 
 const catalogBatchProcess = async (event: SQSEvent) => {
+  console.log('Lambda invocation with event: ', JSON.stringify(event))
   const productService = productsContainer.get(ProductsService)
   const snsService = productsContainer.get(SnsService)
 
