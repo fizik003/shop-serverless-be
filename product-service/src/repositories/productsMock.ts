@@ -11,8 +11,6 @@ export class ProductsMockRepository implements ProductsRepository {
     this.mockProductsCards = [...productsMock]
   }
   async getAll(): Promise<ProductCard[]> {
-    console.log(222222)
-
     return this.mockProductsCards
   }
 
