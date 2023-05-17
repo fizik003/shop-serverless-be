@@ -4,7 +4,7 @@
     "lib": ["ESNext"],
     "moduleResolution": "node",
     "noUnusedLocals": true,
-    "noUnusedParameters": true,       
+    "noUnusedParameters": true,
     "esModuleInterop": true,
     "removeComments": true,
     "resolveJsonModule": true,

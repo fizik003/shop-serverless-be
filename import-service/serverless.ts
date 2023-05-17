@@ -63,32 +63,21 @@ const serverlessConfiguration: AWS = {
     uploadBucket: 'import-service003',
     parsedFolder: 'parsed',
   },
-  // resources: {
-  //   Resources: {
-  //     productsTable: {
-  //       Type: 'AWS::DynamoDB::Table',
-  //       Properties: {
-  //         TableName: '${self:custom.productsTableName}',
-  //         AttributeDefinitions: [
-  //           {
-  //             AttributeName: 'id',
-  //             AttributeType: 'S',
-  //           },
-  //         ],
-  //         KeySchema: [
-  //           {
-  //             AttributeName: 'id',
-  //             KeyType: 'HASH',
-  //           },
-  //         ],
-  //         ProvisionedThroughput: {
-  //           ReadCapacityUnits: 1,
-  //           WriteCapacityUnits: 1,
-  //         },
-  //       },
-  //     },
-  //   },
-  // },
+  resources: {
+    Resources: {
+      GatewayResponseDefault4XX: {
+        Type: 'AWS::ApiGateway::GatewayResponse',
+        Properties: {
+          ResponseParameters: {
+            'gatewayresponse.header.Access-Control-Allow-Origin': "'*'",
+            'gatewayresponse.header.Access-Control-Allow-Headers': "'*'",
+          },
+          ResponseType: 'DEFAULT_4XX',
+          RestApiId: { Ref: 'ApiGatewayRestApi' },
+        },
+      },
+    },
+  },
 }
 
 module.exports = serverlessConfiguration
