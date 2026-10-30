@@ -8,6 +8,13 @@ export default {
         method: 'get',
         path: '/import',
         cors: true,
+        authorizer: {
+          name: 'basicAuthorizer',
+          arn: {
+            'Fn::ImportValue': 'authorization-service-dev-BasicAuthorizerArn',
+          },
+          type: 'token',
+        },
       },
     },
   ],
